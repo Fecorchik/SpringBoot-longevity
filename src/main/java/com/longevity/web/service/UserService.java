@@ -44,7 +44,7 @@ public class UserService implements UserDetailsService {
             if (clientRepo.findByUsername(((Client) user).getUsername()) != null) {
                 return false;
             }
-            ((Client) user).setRole(Collections.singleton(Role.USER));
+            ((Client) user).setRole(Collections.singleton(Role.CLIENT));
             ((Client) user).setStatus(StatusUser.ACTIVE);
             ((Client) user).setPassword(passwordEncoder.encode(((Client) user).getPassword()));
             ((Client) user).setCreated(LocalDateTime.now());

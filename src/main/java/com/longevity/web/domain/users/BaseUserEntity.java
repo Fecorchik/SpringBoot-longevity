@@ -1,8 +1,6 @@
 package com.longevity.web.domain.users;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-import com.longevity.web.domain.Views;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,12 +42,10 @@ public class BaseUserEntity implements UserDetails {
     @Column(name = "status")
     private StatusUser status;
 
-    @JsonView(Views.AdminEmployee.class)
     @CreatedDate
     @Column(name = "created")
     private LocalDateTime created;
 
-    @JsonView(Views.AdminEmployee.class)
     @CreatedDate
     @Column(name = "updated")
     private LocalDateTime updated;

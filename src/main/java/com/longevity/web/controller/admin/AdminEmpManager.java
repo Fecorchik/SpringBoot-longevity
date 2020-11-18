@@ -1,7 +1,5 @@
 package com.longevity.web.controller.admin;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.longevity.web.domain.Views;
 import com.longevity.web.domain.users.Employee;
 import com.longevity.web.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,6 @@ public class AdminEmpManager{
     }
 
     @GetMapping("/all")
-    @JsonView(Views.AdminEmployee.class)
     public String getAllEmployee(Model model){
         model.addAttribute("employees", employeeService.getAllEmployees());
         return "admin/employees";
