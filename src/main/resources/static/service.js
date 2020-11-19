@@ -1,12 +1,11 @@
 var $add = document.getElementsByClassName('add-service');
-// var $del = document.getElementsByClassName('serviceDelete');
-var countService = 2;
+var countService = document.getElementsByClassName("service-input").length + 1;
 let services = [];
 
 function addService(){
     $obj = "<div class=\"col-md-10\">\n" +
         "                    <p>\n" +
-        "                        <select name=\"service-"+countService+"\">\n";
+        "                        <select name=\"service-"+countService+"\" class=\"service-input\">\n";
 
     Array.prototype.forEach.call(services, function(element) {
         $obj += "<option class=\"serviceOption\" value=\""+element.key+"\">"+element.value+"</option>\n";
@@ -43,8 +42,4 @@ function add() {
 function deleteService(nameService) {
     document.getElementsByClassName('row justify-content-center '+nameService)[0].remove();
 }
-
-
-// document.getElementsByClassName('row justify-content-center '+nameService)[0].remove();
-// console.log(document.getElementsByClassName('row justify-content-center '+nameService)[0]);
 

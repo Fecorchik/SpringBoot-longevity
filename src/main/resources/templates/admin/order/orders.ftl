@@ -45,7 +45,7 @@
             <div class="row justify-content-center service-1">
                 <div class="col-md-10">
                     <p>
-                        <select name="service-1">
+                        <select name="service-1" class="service-input">
                             <#list services as service>
                                 <option class="serviceOption" value="${service.getId()}">Имя:${service.getName()}, Цена:${service.getPrice()}</option>
                             </#list>

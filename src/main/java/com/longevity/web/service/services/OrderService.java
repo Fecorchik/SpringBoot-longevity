@@ -46,7 +46,9 @@ public class OrderService {
         form.forEach((key, value) ->{
             String[] mas = key.split("-");
             if(mas[0].equals("service")){
-                services.add(servicesRepo.findById(Long.parseLong(mas[1])).get());
+                if(servicesRepo.findById(Long.parseLong(value)).get() != null){
+                    services.add(servicesRepo.findById(Long.parseLong(value)).get());
+                }
             }
         });
         order.setServices(services);
