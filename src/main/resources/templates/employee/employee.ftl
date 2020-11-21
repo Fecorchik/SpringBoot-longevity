@@ -19,6 +19,11 @@
                         <p><a href="/employee/script/all" class="btn btn-primary">Сценарии</a></p>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col">
+                        <p><a href="/employee/custom_script/all" class="btn btn-primary">Кастомный сценарий</a></p>
+                    </div>
+                </div>
             </div>
         </div>
 

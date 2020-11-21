@@ -89,4 +89,5 @@
             </div>
         </div>
     </form>
+    <script src="/static/service.js" type="text/javascript"></script>
 </@c.page>

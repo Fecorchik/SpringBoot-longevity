@@ -1,5 +1,7 @@
 package com.longevity.web.util;
 
+import com.longevity.web.domain.util.CustomScriptNote;
+import com.longevity.web.domain.scripts.Note;
 import com.longevity.web.domain.services.Services;
 import com.longevity.web.repo.ServicesRepo;
 
@@ -20,5 +22,34 @@ public class ServiceUtil {
             }
         });
         return services;
+    }
+
+    public static CustomScriptNote getServicesAndNotes(Map<String, String> form, ServicesRepo servicesRepo){
+        CustomScriptNote list = new CustomScriptNote();
+        List<Services> services = new ArrayList<>();
+        List<Note> notes = new ArrayList<>();
+        form.forEach((key, value) ->{
+            String[] mas = key.split("-");
+            if(mas.length == 2){
+                if(mas[0].equals("service")){
+                    if(servicesRepo.findById(Long.parseLong(value)).get() != null){
+                        services.add(servicesRepo.findById(Long.parseLong(value)).get());
+                    }
+                }
+            }
+            if(mas.length == 3){
+                if(mas[0].equals("service") && mas[2].equals("text")){
+                    System.out.println();
+                    if(value.equals("")){
+                        notes.add(new Note("empty"));
+                    }else{
+                        notes.add(new Note(value));
+                    }
+                }
+            }
+        });
+        list.setServicesList(services);
+        list.setNoteList(notes);
+        return list;
     }
 }

@@ -25,7 +25,7 @@
 
             <div class="formService">
                 <#list script.getServices() as serviceBysctipt>
-                <div class="row justify-content-center service-1">
+                <div class="row justify-content-center service-${serviceBysctipt?index +1}">
                     <div class="col-md-10">
                         <p>
                             <select name="service-${serviceBysctipt?index +1}" class="service-input">
@@ -37,7 +37,7 @@
                     </div>
                     <div class="col-2">
                         <#if serviceBysctipt?index != 0>
-                            <a href="" class="btn btn-danger" onclick="deleteService('service-${serviceBysctipt?index +1}');">Удалить</a>
+                            <a class="btn btn-danger" onclick="deleteService('service-${serviceBysctipt?index +1}');">Удалить</a>
                         </#if>
                     </div>
                 </div>
@@ -60,4 +60,5 @@
             </div>
         </div>
     </form>
+    <script src="/static/service.js" type="text/javascript"></script>
 </@c.page>

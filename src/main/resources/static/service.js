@@ -1,15 +1,18 @@
 var $add = document.getElementsByClassName('add-service');
 var countService = document.getElementsByClassName("service-input").length + 1;
-let services = [];
+var services = new Map();
+var $obj = "";
+
+function MapElements(value, key, map){
+    $obj +="<option class=\"serviceOption\" value=\""+key+"\">"+value+"</option>\n";
+}
 
 function addService(){
     $obj = "<div class=\"col-md-10\">\n" +
         "                    <p>\n" +
         "                        <select name=\"service-"+countService+"\" class=\"service-input\">\n";
 
-    Array.prototype.forEach.call(services, function(element) {
-        $obj += "<option class=\"serviceOption\" value=\""+element.key+"\">"+element.value+"</option>\n";
-    });
+    services.forEach(MapElements);
 
     $obj += "                        </select>\n" +
         "                    </p>\n" +
@@ -28,14 +31,14 @@ function addService(){
 }
 
 $add[0].addEventListener('click', function(event) {
-    if(services.length < 1){add();}
+    if(services.size < 1){add();}
     addService();
 });
 
 function add() {
     servicesOption = document.getElementsByClassName("serviceOption");
     Array.prototype.forEach.call(servicesOption, function(element) {
-        services.push({key: element.value, value:element.text});
+        services.set(element.value, element.text);
     });
 }
 
