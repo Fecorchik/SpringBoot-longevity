@@ -2,13 +2,15 @@ package com.longevity.web.controller.Employee;
 
 import com.longevity.web.domain.scripts.ScriptGroup;
 import com.longevity.web.service.scripts.ScriptGroupService;
+import com.longevity.web.util.PageUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@PreAuthorize("hasAnyAuthority('ADMIN','EMPLOYEE')")
+@PreAuthorize("hasAuthority('EMPLOYEE')")
 //TODO роль 'EMPLOYEE' сменить на нужную роль
 @RequestMapping("/employee/script_group")
 public class EmployeeScriptGroup {
@@ -21,8 +23,7 @@ public class EmployeeScriptGroup {
 
     @GetMapping("all")
     public String getAllScriptGroup(Model model){
-        model.addAttribute("groups", scriptGroupService.findAll());
-        return "employee/script/groups";
+        return findPaginatedGroups(PageUtil.pageNo, model);
     }
 
     @GetMapping("{id}")
@@ -48,6 +49,18 @@ public class EmployeeScriptGroup {
     public String deleteScriptGroupById(@PathVariable(name = "id") ScriptGroup scriptGroup){
         scriptGroupService.delete(scriptGroup);
         return "redirect:/employee/script_group/all";
+    }
+
+    @GetMapping("/all/pageus/{pageNo}")
+    public String findPaginatedGroups(@PathVariable("pageNo") int pageNo, Model model) {
+        Page<ScriptGroup> page = scriptGroupService.findPaginate(pageNo, PageUtil.pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("groups", page.getContent());
+
+        return "employee/script/groups";
     }
 }
 

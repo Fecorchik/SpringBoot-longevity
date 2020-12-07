@@ -2,6 +2,9 @@ package com.longevity.web.service.services;
 
 import com.longevity.web.domain.services.Services;
 import com.longevity.web.repo.ServicesRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,5 +49,10 @@ public class ServicesService {
         if(check){
             servicesRepo.save(service);
         }
+    }
+
+    public Page<Services> findPaginate(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.servicesRepo.findAll(pageable);
     }
 }

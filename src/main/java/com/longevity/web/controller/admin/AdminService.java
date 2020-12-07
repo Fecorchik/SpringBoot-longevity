@@ -2,6 +2,8 @@ package com.longevity.web.controller.admin;
 
 import com.longevity.web.domain.services.Services;
 import com.longevity.web.service.services.ServicesService;
+import com.longevity.web.util.PageUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,8 +21,7 @@ public class AdminService {
 
     @GetMapping("all")
     public String getAllService(Model model){
-        model.addAttribute("services", servicesService.getAllServices());
-        return "admin/service/services";
+        return findPaginatedServices(PageUtil.pageNo, model);
     }
 
     @GetMapping("{id}")
@@ -52,5 +53,17 @@ public class AdminService {
     public String deleteServiceById(@PathVariable(name = "id") Services service){
         servicesService.deleteService(service);
         return "redirect:/admin/service/all";
+    }
+
+    @GetMapping("/all/pageus/{pageNo}")
+    public String findPaginatedServices(@PathVariable("pageNo") int pageNo, Model model) {
+        Page<Services> page = servicesService.findPaginate(pageNo, PageUtil.pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("services", page.getContent());
+
+        return "admin/service/services";
     }
 }

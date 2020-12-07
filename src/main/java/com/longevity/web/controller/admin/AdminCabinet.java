@@ -4,6 +4,8 @@ import com.longevity.web.domain.branch.Cabinet;
 import com.longevity.web.service.BranchService;
 import com.longevity.web.service.CabinetService;
 import com.longevity.web.service.EmployeeService;
+import com.longevity.web.util.PageUtil;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,9 +29,9 @@ public class AdminCabinet {
 
     @GetMapping("all")
     public String getAllCabinets(Model model){
-        model.addAttribute("cabinets", cabinetService.getAllCabinets());
-        model.addAttribute("branches", branchService.getAllBranch());
-        return "admin/cabinet/cabinets";
+//        model.addAttribute("cabinets", cabinetService.getAllCabinets());
+////        model.addAttribute("branches", branchService.getAllBranch());
+        return findPaginatedCabinets(PageUtil.pageNo, model);
     }
 
     @GetMapping("{id}")
@@ -65,6 +67,18 @@ public class AdminCabinet {
     public String deleteCabinetById(@PathVariable(name = "id") Cabinet cabinet){
         cabinetService.deleteCabinet(cabinet);
         return "redirect:/admin/cabinet/all";
+    }
+
+    @GetMapping("/all/pageus/{pageNo}")
+    public String findPaginatedCabinets(@PathVariable("pageNo") int pageNo, Model model) {
+        Page<Cabinet> page = cabinetService.findPaginate(pageNo, PageUtil.pageSize);
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("cabinets", page.getContent());
+        model.addAttribute("branches", branchService.getAllBranch());
+        return "admin/cabinet/cabinets";
     }
 
 }

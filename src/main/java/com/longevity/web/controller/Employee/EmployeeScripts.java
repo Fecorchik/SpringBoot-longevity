@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @Controller
-@PreAuthorize("hasAnyAuthority('ADMIN','EMPLOYEE')")
+@PreAuthorize("hasAuthority('EMPLOYEE')")
 //TODO роль 'EMPLOYEE' сменить на нужную роль
 @RequestMapping("/employee/script")
 public class EmployeeScripts {

@@ -6,6 +6,9 @@ import com.longevity.web.domain.services.StatusScore;
 import com.longevity.web.repo.ClientRepo;
 import com.longevity.web.repo.OrderRepo;
 import com.longevity.web.repo.ServicesRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -54,5 +57,10 @@ public class OrderService {
         order.setServices(services);
 
         orderRepo.save(order);
+    }
+
+    public Page<Order> findPaginate(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.orderRepo.findAll(pageable);
     }
 }

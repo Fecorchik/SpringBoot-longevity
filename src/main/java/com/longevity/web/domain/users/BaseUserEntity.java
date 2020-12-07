@@ -10,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @MappedSuperclass
 @Data
@@ -76,6 +77,15 @@ public class BaseUserEntity implements UserDetails {
     }
 
     public boolean isAdmin(){
-        return (getRole().contains("ADMIN")) ? true : false;
+        return getRole().contains(Role.ADMIN);
     }
+
+    public boolean isEmployee() {
+        return getRole().contains(Role.EMPLOYEE);
+    }
+
+    public String roleName() {
+        return getRole().stream().map(Role::name).collect(Collectors.toList()).get(0);
+    }
+
 }

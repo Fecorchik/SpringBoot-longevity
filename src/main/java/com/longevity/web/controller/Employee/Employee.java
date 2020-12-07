@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@PreAuthorize("hasAuthority('ADMIN')" + "|| hasAuthority('EMPLOYEE')")
+@PreAuthorize("hasAuthority('EMPLOYEE')")
 //TODO роль 'EMPLOYEE' сменить на нужную роль
 @RequestMapping("/employee")
 public class Employee {

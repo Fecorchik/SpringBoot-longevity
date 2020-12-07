@@ -3,6 +3,7 @@ package com.longevity.web.controller;
 import com.longevity.web.domain.users.Client;
 import com.longevity.web.domain.users.Employee;
 import com.longevity.web.service.UserService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -25,6 +26,8 @@ public class RegistrationController {
     public String registrationClient() {
         return "registrationClient";
     }
+
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/registration/employee")
     public String registrationEmployee() {
         return "registrationEmployee";
@@ -59,6 +62,7 @@ public class RegistrationController {
         return "redirect:/login";
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/registration/employee")
     public String addUserEmployee(
             @RequestParam("password2") String passwordConfirm,

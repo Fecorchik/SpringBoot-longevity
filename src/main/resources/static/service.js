@@ -10,7 +10,7 @@ function MapElements(value, key, map){
 function addService(){
     $obj = "<div class=\"col-md-10\">\n" +
         "                    <p>\n" +
-        "                        <select name=\"service-"+countService+"\" class=\"service-input\">\n";
+        "                        <select name=\"service-" + countService + "\" class=\"service-input form-control login_text_field_bg input-style\">\n";
 
     services.forEach(MapElements);
 
@@ -44,5 +44,9 @@ function add() {
 
 function deleteService(nameService) {
     document.getElementsByClassName('row justify-content-center '+nameService)[0].remove();
+}
+
+function deleteServiceCustom(idService) {
+    document.getElementById('m' + idService).remove();
 }
 

@@ -8,6 +8,9 @@ import com.longevity.web.repo.BranchRepo;
 import com.longevity.web.repo.CabinetRepo;
 import com.longevity.web.repo.EmployeeRepo;
 import com.longevity.web.util.SchedulesUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -84,9 +87,11 @@ public class CabinetService{
 
     private boolean checkCabinetInBranch(String nameCabinet, Long idBranch){
         //true - нету кабинета в отделении, false - есть
-        if(cabinetRepo.findByNameAndBranchId(nameCabinet, idBranch) == null){
-            return true;
-        }
-        return false;
+        return cabinetRepo.findByNameAndBranchId(nameCabinet, idBranch) == null;
+    }
+
+    public Page<Cabinet> findPaginate(int pageNo, int pageSize) {
+        Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+        return this.cabinetRepo.findAll(pageable);
     }
 }
